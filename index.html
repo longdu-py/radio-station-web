@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>私人伤感电台 | 在线收音机</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- 音频可视化背景画布 -->
+  <canvas id="audioCanvas"></canvas>
+
+  <div class="container">
+    <header class="header">
+      <h1>📻 私人情感收音机</h1>
+      <p>深夜伤感情歌 / 故事电台 / 城市广播</p>
+    </header>
+
+    <!-- 播放器主体 -->
+    <div class="radio-box">
+      <div class="radio-info">
+        <h2 id="radioName">未选择电台</h2>
+        <p id="radioDesc">请从下方频道列表选择电台播放</p>
+      </div>
+
+      <!-- 播放控制 -->
+      <div class="control-group">
+        <button id="prevRadio">上一台</button>
+        <button id="playBtn" class="play-main">播放</button>
+        <button id="nextRadio">下一台</button>
+      </div>
+
+      <!-- 音量+定时关闭 -->
+      <div class="tool-row">
+        <div class="volume">
+          <span>音量</span>
+          <input type="range" min="0" max="100" value="75" id="volumeSlider" />
+        </div>
+        <div class="sleep-box">
+          <span>定时关闭：</span>
+          <select id="sleepTime">
+            <option value="0">关闭定时</option>
+            <option value="30">30分钟</option>
+            <option value="60">60分钟</option>
+            <option value="120">120分钟</option>
+          </select>
+        </div>
+        <button id="collectBtn" class="collect-btn">♥ 收藏电台</button>
+      </div>
+    </div>
+
+    <!-- 自定义添加电台 -->
+    <div class="add-radio">
+      <h3>自定义添加直播电台</h3>
+      <input type="text" id="radioTitle" placeholder="电台名称">
+      <input type="text" id="radioUrl" placeholder="直播源链接(m3u8/mp3)">
+      <button id="addCustomBtn">添加</button>
+    </div>
+
+    <!-- 标签切换：全部电台 / 我的收藏 -->
+    <div class="tab-wrap">
+      <button class="tab active" data-type="all">全部频道</button>
+      <button class="tab" data-type="love">我的收藏</button>
+    </div>
+
+    <!-- 电台列表 -->
+    <div class="radio-list" id="radioList"></div>
+
+    <audio id="radioAudio" crossorigin="anonymous">
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
