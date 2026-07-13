@@ -1,0 +1,203 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Microsoft YaHei", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(160deg, #050510, #1a0f29, #271438);
+  color: #f0e6f0;
+  overflow-x: hidden;
+}
+#audioCanvas {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  opacity: 0.3;
+}
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  position: relative;
+  z-index: 2;
+}
+.header {
+  text-align: center;
+  margin-bottom: 35px;
+}
+.header h1 {
+  font-size: 32px;
+  color: #ffb3d0;
+  margin-bottom: 8px;
+}
+.header p {
+  color: #c9a8c9;
+}
+
+/* 收音机主体 */
+.radio-box {
+  background: rgba(40, 20, 55, 0.55);
+  border-radius: 18px;
+  padding: 28px;
+  border: 1px solid #7a3b7a66;
+  box-shadow: 0 0 30px #913d8033;
+  margin-bottom: 25px;
+}
+.radio-info {
+  text-align: center;
+  margin-bottom: 25px;
+}
+.radio-info h2 {
+  color: #ffc2dd;
+  font-size: 26px;
+  margin-bottom: 6px;
+}
+.radio-info p {
+  color: #d4b4d4;
+}
+
+/* 播放控制按钮 */
+.control-group {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.control-group button {
+  border: none;
+  padding: 11px 24px;
+  border-radius: 99px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.25s;
+}
+.play-main {
+  background: linear-gradient(90deg, #943b78, #dd5499);
+  color: #fff;
+  min-width: 130px;
+}
+.control-group button:not(.play-main) {
+  background: #361e44;
+  color: #ffc8e0;
+}
+button:hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 15px #dd549955;
+}
+
+/* 工具行：音量、定时、收藏 */
+.tool-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  align-items: center;
+  justify-content: center;
+}
+.volume {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#volumeSlider {
+  width: 140px;
+}
+.sleep-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.collect-btn {
+  background: transparent;
+  border: 1px solid #ff77aa;
+  color: #ff77aa;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.collect-btn.love {
+  background: #ff447733;
+  color: #ff3366;
+}
+
+/* 添加自定义电台区域 */
+.add-radio {
+  background: rgba(35, 18, 48, 0.6);
+  padding: 20px;
+  border-radius: 14px;
+  margin-bottom: 20px;
+}
+.add-radio h3 {
+  margin-bottom: 12px;
+  color: #ffc8e0;
+}
+.add-radio input {
+  width: 100%;
+  padding: 10px 14px;
+  margin: 6px 0;
+  border-radius: 8px;
+  border: none;
+  background: #2a1738;
+  color: #fff;
+  outline: 1px solid #804080;
+}
+#addCustomBtn {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 8px;
+  background: #924282;
+  color: white;
+  cursor: pointer;
+}
+
+/* 切换标签 */
+.tab-wrap {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.tab {
+  padding: 7px 18px;
+  border-radius: 20px;
+  border: none;
+  background: #2c1a3a;
+  color: #ccc;
+  cursor: pointer;
+}
+.tab.active {
+  background: #943b78;
+  color: white;
+}
+
+/* 电台频道列表 */
+.radio-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+.radio-item {
+  padding: 13px 16px;
+  background: rgba(45, 22, 60, 0.45);
+  border-radius: 10px;
+  margin: 7px 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  transition: 0.2s;
+}
+.radio-item:hover {
+  background: #50286866;
+}
+.radio-item.active {
+  border: 1px solid #ff77aa;
+  background: #783a6644;
+}
+.radio-item .love-tag {
+  color: #ff5588;
+}
