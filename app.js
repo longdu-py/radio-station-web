@@ -1,4 +1,3 @@
-// DOM 元素
 const audio = document.getElementById('radioAudio');
 const playBtn = document.getElementById('playBtn');
 const prevRadio = document.getElementById('prevRadio');
@@ -12,19 +11,21 @@ const radioListBox = document.getElementById('radioList');
 const tabBtns = document.querySelectorAll('.tab');
 const canvas = document.getElementById('audioCanvas');
 const ctx = canvas.getContext('2d');
-
-// 自定义电台输入框
 const titleInput = document.getElementById('radioTitle');
 const urlInput = document.getElementById('radioUrl');
 const addCustomBtn = document.getElementById('addCustomBtn');
 
-// 全局变量
+// 内置稳定伤感/情感/怀旧电台m3u8源
 let allRadio = [
-  { name: "伤感情歌电台", desc: "全天循环华语悲伤情歌", url: "https://live.xxxx.com/sad.m3u8" },
-  { name: "深夜故事广播", desc: "情感故事、治愈夜话", url: "https://live.xxxx.com/story.m3u8" },
-  { name: "城市音乐调频", desc: "流行轻音乐", url: "https://live.xxxx.com/music.m3u8" },
-  { name: "怀旧老歌频道", desc: "8090经典伤感老歌", url: "https://live.xxxx.com/old.m3u8" },
+  { name: "中央音乐之声", desc: "流行情歌、全天情感音乐循环", url: "http://ngcdn003.cnr.cn/live/yyzs/index.m3u8" },
+  { name: "中央经典音乐广播", desc: "8090怀旧伤感老歌合集", url: "http://ngcdn004.cnr.cn/live/dszs/index.m3u8" },
+  { name: "广东音乐之声", desc: "粤语伤感情歌、华语金曲", url: "http://satellitepull.cnr.cn/live/wxgdyyzs/playlist.m3u8" },
+  { name: "河南经济广播", desc: "深夜情感夜话、治愈故事", url: "https://stream.hndt.com/live/jingji/playlist.m3u8" },
+  { name: "舒缓治愈电台", desc: "纯音乐、失眠安静氛围", url: "http://stream.radioparadise.com/mellow-flacm" },
+  { name: "宁静轻音乐频道", desc: "放松独处、深夜独白背景音", url: "http://stream.radioparadise.com/serenity" },
+  { name: "欧美灵魂伤感电台", desc: "抒情慢歌、深夜emo氛围", url: "https://ice5.somafm.com/7soul-128-aac" }
 ];
+
 let customRadio = JSON.parse(localStorage.getItem('customRadio')) || [];
 let loveRadio = JSON.parse(localStorage.getItem('loveRadio')) || [];
 let sleepTimer = null;
@@ -33,12 +34,10 @@ let showTab = "all";
 let isPlaying = false;
 let audioCtx, analyser, dataArray;
 
-// 合并官方+自定义电台
 function getTotalRadio() {
   return [...allRadio, ...customRadio];
 }
 
-// 画布自适应频谱
 function resizeCanvas() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
@@ -46,7 +45,6 @@ function resizeCanvas() {
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
 
-// 音频可视化频谱
 function initVisual() {
   if (audioCtx) return;
   audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -75,21 +73,18 @@ function drawWave() {
   }
 }
 
-// 渲染电台列表
 function renderList() {
   radioListBox.innerHTML = "";
   const total = getTotalRadio();
   let renderArr = showTab === "all" ? total : loveRadio;
   renderArr.forEach((radio, idx) => {
     const item = document.createElement("div");
-    item.className = `radio-item ${
-      total.indexOf(radio) === currentIndex && showTab === "all" ? "active" : ""
-    }`;
+    item.className = `radio-item ${total.indexOf(radio) === currentIndex && showTab === "all" ? "active" : ""}`;
     const text = document.createElement("div");
     text.innerHTML = `<strong>${radio.name}</strong><br><small>${radio.desc}</small>`;
     const tag = document.createElement("span");
     tag.className = "love-tag";
-    tag.innerText = loveRadio.includes(radio) ? "♥" : "";
+    tag.innerText = loveRadio.some(r=>r.url === radio.url) ? "♥" : "";
     item.appendChild(text);
     item.appendChild(tag);
     item.onclick = () => {
@@ -100,7 +95,6 @@ function renderList() {
   });
 }
 
-// 更新收藏按钮状态
 function refreshCollectBtn() {
   const total = getTotalRadio();
   const curr = total[currentIndex];
@@ -114,7 +108,6 @@ function refreshCollectBtn() {
   }
 }
 
-// 播放指定电台
 function playRadio(index) {
   const total = getTotalRadio();
   if (!total[index]) return;
@@ -126,13 +119,15 @@ function playRadio(index) {
   audio.play().then(() => {
     isPlaying = true;
     playBtn.innerText = "暂停";
-  }).catch(e => console.log("播放失败：源链接失效"));
+  }).catch(e => {
+    alert("该电台源加载失败，更换其他频道或直播链接");
+    console.log(e);
+  });
   renderList();
   refreshCollectBtn();
   initVisual();
 }
 
-// 播放暂停切换
 playBtn.onclick = () => {
   const total = getTotalRadio();
   if (!total[currentIndex] || !audio.src) {
@@ -150,7 +145,6 @@ playBtn.onclick = () => {
   isPlaying = !isPlaying;
 };
 
-// 上一台、下一台
 prevRadio.onclick = () => {
   const total = getTotalRadio();
   if (total.length === 0) return;
@@ -164,11 +158,9 @@ nextRadio.onclick = () => {
   playRadio(currentIndex);
 };
 
-// 音量控制
 volumeSlider.oninput = () => audio.volume = volumeSlider.value / 100;
 audio.volume = volumeSlider.value / 100;
 
-// 定时关闭逻辑
 sleepSelect.onchange = () => {
   clearTimeout(sleepTimer);
   const minute = Number(sleepSelect.value);
@@ -182,7 +174,6 @@ sleepSelect.onchange = () => {
   }, ms);
 };
 
-// 收藏/取消收藏
 collectBtn.onclick = () => {
   const total = getTotalRadio();
   const curr = total[currentIndex];
@@ -195,23 +186,21 @@ collectBtn.onclick = () => {
   renderList();
 };
 
-// 添加自定义电台
 addCustomBtn.onclick = () => {
   const name = titleInput.value.trim();
   const url = urlInput.value.trim();
   if (!name || !url) {
-    alert("名称和直播链接不能为空！");
+    alert("电台名称与直播链接不能为空");
     return;
   }
-  customRadio.push({ name, desc: "自定义电台", url });
+  customRadio.push({ name, desc: "自定义情感电台", url });
   localStorage.setItem("customRadio", JSON.stringify(customRadio));
   titleInput.value = "";
   urlInput.value = "";
   renderList();
-  alert("自定义电台添加成功！");
+  alert("自定义电台添加成功");
 };
 
-// 切换标签 全部/收藏
 tabBtns.forEach(tab => {
   tab.onclick = () => {
     tabBtns.forEach(t => t.classList.remove("active"));
@@ -221,5 +210,4 @@ tabBtns.forEach(tab => {
   };
 });
 
-// 页面初始化渲染
 renderList();
