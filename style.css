@@ -40,7 +40,6 @@ body {
   color: #c9a8c9;
 }
 
-/* 收音机主体 */
 .radio-box {
   background: rgba(40, 20, 55, 0.55);
   border-radius: 18px;
@@ -62,7 +61,6 @@ body {
   color: #d4b4d4;
 }
 
-/* 播放控制按钮 */
 .control-group {
   display: flex;
   gap: 16px;
@@ -91,7 +89,6 @@ button:hover {
   box-shadow: 0 0 15px #dd549955;
 }
 
-/* 工具行：音量、定时、收藏 */
 .tool-row {
   display: flex;
   flex-wrap: wrap;
@@ -125,7 +122,6 @@ button:hover {
   color: #ff3366;
 }
 
-/* 添加自定义电台区域 */
 .add-radio {
   background: rgba(35, 18, 48, 0.6);
   padding: 20px;
@@ -157,7 +153,6 @@ button:hover {
   cursor: pointer;
 }
 
-/* 切换标签 */
 .tab-wrap {
   display: flex;
   gap: 10px;
@@ -176,7 +171,6 @@ button:hover {
   color: white;
 }
 
-/* 电台频道列表 */
 .radio-list {
   max-height: 400px;
   overflow-y: auto;
